@@ -1,0 +1,17 @@
+person:
+  name: asangsang
+spring:
+  profiles: test
+
+---
+
+spring:
+  profiles: dev
+  datasource:
+    username: root
+    password: mysql
+    #?serverTimezone=UTC解决时区的报错
+    url: jdbc:mysql://124.70.44.128:3306/account?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+person:
+  name: asang
