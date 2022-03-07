@@ -12,4 +12,10 @@ import java.util.List;
 @Repository
 public interface AccountMapper {
     List<Account> getAccounts(@Param("user") HashMap<String, Object> user);
+
+    void addAccount(@Param("user") HashMap<String, Object> user);
+
+    void delAccount(@Param("id") int id);
+
+    void updateAccount(@Param("user") HashMap<String,Object> user);
 }

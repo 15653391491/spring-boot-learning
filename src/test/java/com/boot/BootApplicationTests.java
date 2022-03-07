@@ -17,9 +17,11 @@ class BootApplicationTests {
     private DataSource dataSource;
     @Test
     void contextLoads() throws SQLException {
-        System.out.println(dataSource);
+        Object pc = Person.class;
         Connection connection = dataSource.getConnection();
-        System.out.println(connection);
+        Person person = new Person();
+        int i = 1;
+        System.out.println(Person.class);
         connection.close();
     }
 

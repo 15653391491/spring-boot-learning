@@ -9,6 +9,24 @@ public class Account {
     private String password1;
     private String password2;
     private String platform;
+    private String createTime;
+    private String updateTime;
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
 
     @Override
     public String toString() {

@@ -17,4 +17,38 @@
             </if>
         </where>
     </select>
+    <insert id="addAccount" parameterType="com.boot.pojo.Account">
+        insert into tb_account (account
+        <if test="user.password1!=null">,password1</if>
+        <if test="user.password2!=null">,password2</if>
+        <if test="user.platform!=null">,platform</if>
+        <if test="user.createTime!=null">,createTime</if>
+        <if test="user.updateTime!=null">,updateTime</if>)
+        values ("${user.account}"
+        <if test="user.password1!=null">, "${user.password1}"</if>
+        <if test="user.password2!=null">,"${user.password2}"</if>
+        <if test="user.platform!=null">,"${user.platform}"</if>
+        <if test="user.createTime!=null">,"${user.createTime}"</if>
+        <if test="user.updateTime!=null">,"${user.updateTime}"</if>)
+    </insert>
+    <delete id="delAccount" parameterType="int">
+        delete
+        from tb_account
+        where id = #{id}
+    </delete>
+    <update id="updateAccount" parameterType="com.boot.pojo.Account">
+        update tb_account
+        <set>
+            <if test="user.password1!=null">
+                password1= "${user.password1}",
+            </if>
+            <if test="user.password2!=null">
+                password2="${user.password2}",
+            </if>
+            <if test="user.platform!=null">
+                platform="${user.platform}",
+            </if>
+        </set>
+        where id = "${user.id}"
+    </update>
 </mapper>
