@@ -5,6 +5,7 @@ import com.boot.pojo.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,9 +19,13 @@ class BootApplicationTests {
     @Test
     void contextLoads() {
         HashMap<String, Object> params = new HashMap<>();
-        List<User> users = userMapper.getUsers(params);
-        for (User user : users) {
-            System.out.println(user);
+        params.put("username", "15653391491");
+        params.put("password", "lucty772");
+        try {
+            userMapper.addUser(params);
+        }catch (DuplicateKeyException e){
+            e.printStackTrace();
+            System.out.println("用户已存在");
         }
     }
 

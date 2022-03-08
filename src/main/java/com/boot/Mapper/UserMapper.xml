@@ -20,19 +20,19 @@
             </if>
         </where>
     </select>
-    <insert id="addAccount" parameterType="com.boot.pojo.Account">
-        insert into tb_account (account
-        <if test="user.password1!=null">,password1</if>
-        <if test="user.password2!=null">,password2</if>
-        <if test="user.platform!=null">,platform</if>
+    <insert id="addUser" parameterType="com.boot.pojo.User">
+        insert into tb_user (username
+        <if test="user.password!=null">,password</if>
+        <if test="user.mobile!=null">,mobile</if>
+        <if test="user.email!=null">,email</if>
         <if test="user.createTime!=null">,createTime</if>
-        <if test="user.updateTime!=null">,updateTime</if>)
-        values ("${user.account}"
-        <if test="user.password1!=null">, "${user.password1}"</if>
-        <if test="user.password2!=null">,"${user.password2}"</if>
-        <if test="user.platform!=null">,"${user.platform}"</if>
+        <if test="user.name!=null">,name</if>)
+        values ("${user.username}"
+        <if test="user.password!=null">, "${user.password}"</if>
+        <if test="user.mobile!=null">,"${user.mobile}"</if>
+        <if test="user.email!=null">,"${user.email}"</if>
         <if test="user.createTime!=null">,"${user.createTime}"</if>
-        <if test="user.updateTime!=null">,"${user.updateTime}"</if>)
+        <if test="user.name!=null">,"${user.name}"</if>)
     </insert>
     <delete id="delAccount" parameterType="int">
         delete

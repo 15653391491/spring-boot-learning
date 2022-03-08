@@ -3,10 +3,7 @@ package com.boot.controller;
 import com.boot.Mapper.AccountMapper;
 import com.boot.pojo.Account;
 import com.boot.tool.Pagenatior;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.SimpleFormatter;
 
+@Api(description = "账号管理")
 @RestController
 @RequestMapping("/account")
 public class AccountController {
