@@ -1,25 +1,27 @@
 package com.boot;
 
+import com.boot.Mapper.UserMapper;
+import com.boot.pojo.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 
 @SpringBootTest
 class BootApplicationTests {
+
     @Autowired
-    private DataSource dataSource;
+    private UserMapper userMapper;
+
     @Test
-    void contextLoads() throws SQLException {
-        Object pc = Person.class;
-        Connection connection = dataSource.getConnection();
-        Person person = new Person();
-        int i = 1;
-        System.out.println(Person.class);
-        connection.close();
+    void contextLoads() {
+        HashMap<String, Object> params = new HashMap<>();
+        List<User> users = userMapper.getUsers(params);
+        for (User user : users) {
+            System.out.println(user);
+        }
     }
 
 }
