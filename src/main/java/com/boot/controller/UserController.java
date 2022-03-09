@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -99,5 +100,14 @@ public class UserController {
         result.setData(getUserResponse);
         result.setMessage("success");
         return result;
+    }
+
+    @Autowired
+    private Hello hello;
+
+    @GetMapping("/hello")
+    public String hello() {
+        hello.sayHello();
+        return "hello";
     }
 }
