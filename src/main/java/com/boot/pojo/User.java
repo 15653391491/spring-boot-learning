@@ -2,6 +2,8 @@ package com.boot.pojo;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class User {
     private Integer id;
@@ -11,6 +13,8 @@ public class User {
     private String email;
     private String name;
     private String createTime;
+    private List<Role> roleInfo;
+    private List<Integer> roles;
 
     @Override
     public String toString() {
@@ -22,8 +26,27 @@ public class User {
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", createTime='" + createTime + '\'' +
+                ", roleInfo=" + roleInfo +
+                ", roles=" + roles +
                 '}';
     }
+
+    public List<Role> getRoleInfo() {
+        return roleInfo;
+    }
+
+    public void setRoleInfo(List<Role> roleInfo) {
+        this.roleInfo = roleInfo;
+    }
+
+    public List<Integer> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Integer> roles) {
+        this.roles = roles;
+    }
+
 
     public Integer getId() {
         return id;

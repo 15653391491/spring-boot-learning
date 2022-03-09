@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.Mapper.UserRoleMapper">
+    <select id="getUserRole" resultMap="UserRole">
+        select *
+        from user_role
+    </select>
+    <resultMap id="UserRole" type="com.boot.pojo.UserRole">
+        <association property="user" column="user_id" javaType="com.boot.pojo.User" select="getUser"/>
+        <association property="role" column="role_id" javaType="com.boot.pojo.Role" select="getRole"/>
+    </resultMap>
+    <select id="getUser" resultType="com.boot.pojo.User">
+        select *
+        from tb_user
+        where id = #{user}
+    </select>
+    <select id="getRole" resultType="com.boot.pojo.Role">
+        select *
+        from tb_role
+        where id = #{role}
+    </select>
+</mapper>

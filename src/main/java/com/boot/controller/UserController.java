@@ -1,28 +1,32 @@
 package com.boot.controller;
 
 import com.boot.Mapper.UserMapper;
+import com.boot.Mapper.UserRoleMapper;
+import com.boot.pojo.Account;
+import com.boot.pojo.User;
+import com.boot.pojo.UserRole;
+import com.boot.tool.Pagenatior;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.*;
 
 @Api(description = "用户管理")
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @ApiOperation("增加用户")
     @PostMapping("/addUser")
@@ -58,6 +62,42 @@ public class UserController {
 //        --- 返回 ---
         HashMap<String, Object> result = new HashMap<>();
         result.put("code", 1);
+        result.put("message", "success");
+        return result;
+    }
+
+    @ApiOperation("查询用户")
+    @GetMapping("/getUser")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页码", dataType = "Integer", defaultValue = "1", paramType = "query"),
+            @ApiImplicitParam(name = "limit", value = "每页条数", dataType = "Integer", defaultValue = "10", paramType = "query"),
+            @ApiImplicitParam(name = "username", value = "用户名", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "mobile", value = "电话", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "email", value = "邮箱", dataType = "String", paramType = "query"),
+    })
+    public HashMap<String, Object> getUser(HttpServletRequest req) {
+//        --- 接收 ---
+        int page = Integer.parseInt(req.getParameter("page"));
+        int limit = Integer.parseInt(req.getParameter("limit"));
+        HashMap<String, Object> params = new HashMap<>();
+        Enumeration<String> names = req.getParameterNames();
+        while (names.hasMoreElements()) {
+            String name = (String) names.nextElement();
+            params.put(name, req.getParameter(name));
+        }
+//        --- 处理 ---
+        List<User> users = userMapper.getUsers(params);
+        HashMap<String, Object> con = new HashMap<>();
+        Pagenatior pagenatior = new Pagenatior(Collections.singletonList(users), limit);
+        List<Object> ret = pagenatior.page(page);
+        con.put("data", ret);
+        con.put("count", users.size());
+        con.put("page", page);
+        con.put("limit", limit);
+//        --- 返回 ---
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("code", 1);
+        result.put("data", con);
         result.put("message", "success");
         return result;
     }

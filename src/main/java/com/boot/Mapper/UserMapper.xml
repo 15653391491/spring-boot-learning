@@ -5,21 +5,50 @@
 
 <mapper namespace="com.boot.Mapper.UserMapper">
     <!--  查询  -->
-    <select id="getUsers" resultType="com.boot.pojo.User">
-        select *
-        from tb_user
+    <select id="getUsers" resultMap="User">
+        select
+        u.id as id,
+        u.username as username,
+        u.password as password,
+        u.mobile as mobile,
+        u.email as email,
+        u.name as name,
+        u.createTime as createTime,
+        r.name as roles,
+        r.id as rid
+        from
+        tb_user u
+        left join user_role ur on u.id= ur.user_id
+        left join tb_role r on ur.role_id=r.id
         <where>
             <if test="user.username!=null">
                 username=#{user.username}
             </if>
             <if test="user.mobile!=null">
-                and platform = #{user.mobile}
+                and mobile = #{user.mobile}
             </if>
             <if test="user.email!=null">
-                and platform = #{user.email}
+                and email = #{user.email}
             </if>
         </where>
     </select>
+    <resultMap id="User" type="com.boot.pojo.User">
+        <id property="id" column="id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="mobile" column="mobile" />
+        <result property="name" column="name" />
+        <result property="email" column="email" />
+        <result property="createTime" column="createTime" />
+        <result property="username" column="username" />
+        <collection property="roleInfo" ofType="com.boot.pojo.Role">
+            <id property="id" column="rid"/>
+            <result property="name" column="roles"/>
+        </collection>
+        <collection property="roles" ofType="Integer">
+            <id property="id" column="rid"/>
+        </collection>
+    </resultMap>
     <insert id="addUser" parameterType="com.boot.pojo.User">
         insert into tb_user (username
         <if test="user.password!=null">,password</if>

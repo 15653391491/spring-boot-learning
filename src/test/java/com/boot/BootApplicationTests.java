@@ -1,7 +1,9 @@
 package com.boot;
 
 import com.boot.Mapper.UserMapper;
+import com.boot.Mapper.UserRoleMapper;
 import com.boot.pojo.User;
+import com.boot.pojo.UserRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,14 +20,10 @@ class BootApplicationTests {
 
     @Test
     void contextLoads() {
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("username", "15653391491");
-        params.put("password", "lucty772");
-        try {
-            userMapper.addUser(params);
-        }catch (DuplicateKeyException e){
-            e.printStackTrace();
-            System.out.println("用户已存在");
+        HashMap<String, Object> hashMap = new HashMap<>();
+        List<User> users = userMapper.getUsers(hashMap);
+        for (User user : users) {
+            System.out.println(user);
         }
     }
 
