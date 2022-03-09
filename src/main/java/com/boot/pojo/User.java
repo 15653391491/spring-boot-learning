@@ -1,20 +1,24 @@
 package com.boot.pojo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@ApiModel("用户")
 public class User {
     private Integer id;
+    @ApiModelProperty(name = "username", value = "用户名")
     private String username;
     private String password;
     private String mobile;
     private String email;
     private String name;
     private String createTime;
-    private List<Role> roleInfo;
-    private List<Integer> roles;
+    private List<Role> roles;
+    private List<Integer> permissions;
 
     @Override
     public String toString() {
@@ -26,25 +30,25 @@ public class User {
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", createTime='" + createTime + '\'' +
-                ", roleInfo=" + roleInfo +
                 ", roles=" + roles +
+                ", permissions=" + permissions +
                 '}';
     }
 
-    public List<Role> getRoleInfo() {
-        return roleInfo;
-    }
-
-    public void setRoleInfo(List<Role> roleInfo) {
-        this.roleInfo = roleInfo;
-    }
-
-    public List<Integer> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Integer> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Integer> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Integer> permissions) {
+        this.permissions = permissions;
     }
 
 

@@ -1,11 +1,10 @@
 package com.boot.controller;
 
 import com.boot.Mapper.UserMapper;
-import com.boot.Mapper.UserRoleMapper;
-import com.boot.pojo.Account;
 import com.boot.pojo.User;
-import com.boot.pojo.UserRole;
+import com.boot.result.GetUserResponse;
 import com.boot.tool.Pagenatior;
+import com.boot.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -75,7 +74,7 @@ public class UserController {
             @ApiImplicitParam(name = "mobile", value = "电话", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "email", value = "邮箱", dataType = "String", paramType = "query"),
     })
-    public HashMap<String, Object> getUser(HttpServletRequest req) {
+    public Result<GetUserResponse> getUser(HttpServletRequest req) {
 //        --- 接收 ---
         int page = Integer.parseInt(req.getParameter("page"));
         int limit = Integer.parseInt(req.getParameter("limit"));
@@ -87,18 +86,18 @@ public class UserController {
         }
 //        --- 处理 ---
         List<User> users = userMapper.getUsers(params);
-        HashMap<String, Object> con = new HashMap<>();
         Pagenatior pagenatior = new Pagenatior(Collections.singletonList(users), limit);
-        List<Object> ret = pagenatior.page(page);
-        con.put("data", ret);
-        con.put("count", users.size());
-        con.put("page", page);
-        con.put("limit", limit);
+        List<User> ret = pagenatior.page(page);
 //        --- 返回 ---
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("code", 1);
-        result.put("data", con);
-        result.put("message", "success");
+        GetUserResponse getUserResponse = new GetUserResponse();
+        getUserResponse.setData(ret);
+        getUserResponse.setCount(users.size());
+        getUserResponse.setPage(page);
+        getUserResponse.setLimit(limit);
+        Result<GetUserResponse> result = new Result<>();
+        result.setCode(1);
+        result.setData(getUserResponse);
+        result.setMessage("success");
         return result;
     }
 }

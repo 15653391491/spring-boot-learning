@@ -9,17 +9,21 @@
         select
         u.id as id,
         u.username as username,
+        u.createTime as createTime,
+        u.`name` as `name`,
         u.password as password,
         u.mobile as mobile,
         u.email as email,
-        u.name as name,
-        u.createTime as createTime,
-        r.name as roles,
-        r.id as rid
+        r.`name` as role,
+        r.id as rId,
+        p.id as permission,
+        p.`name` as permissionName
         from
         tb_user u
-        left join user_role ur on u.id= ur.user_id
-        left join tb_role r on ur.role_id=r.id
+        LEFT JOIN user_role ur on u.id=ur.user_id
+        LEFT JOIN tb_role r on r.id=ur.role_id
+        LEFT JOIN role_permissions rp on r.id=rp.role_id
+        LEFT JOIN tb_permissions p on p.id=rp.permission_id;
         <where>
             <if test="user.username!=null">
                 username=#{user.username}
@@ -33,20 +37,20 @@
         </where>
     </select>
     <resultMap id="User" type="com.boot.pojo.User">
-        <id property="id" column="id" />
-        <result property="username" column="username" />
-        <result property="password" column="password" />
-        <result property="mobile" column="mobile" />
-        <result property="name" column="name" />
-        <result property="email" column="email" />
-        <result property="createTime" column="createTime" />
-        <result property="username" column="username" />
-        <collection property="roleInfo" ofType="com.boot.pojo.Role">
-            <id property="id" column="rid"/>
-            <result property="name" column="roles"/>
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="mobile" column="mobile"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="createTime" column="createTime"/>
+        <result property="username" column="username"/>
+        <collection property="roles" ofType="com.boot.pojo.Role">
+            <id property="id" column="rId"/>
+            <result property="name" column="role"/>
         </collection>
-        <collection property="roles" ofType="Integer">
-            <id property="id" column="rid"/>
+        <collection property="permissions" ofType="Integer">
+            <id property="id" column="permission"/>
         </collection>
     </resultMap>
     <insert id="addUser" parameterType="com.boot.pojo.User">
